@@ -45,14 +45,7 @@
              <span class="badge" >{{hero.id}}</span> {{hero.name}}
            </li>
          </ul>
-         <div *ngIf="selectedHero">
-           <h2>{{selectedHero.name}} details</h2>
-           <div><label>id: </label>{{selectedHero.id}}</div> 
-           <div>
-              <label>name: </label>
-              <div><input [(ngModel)]="selectedHero.name" placeholder="name"></div>
-           </div>
-         </div>
+         <my-hero-detail [hero]="selectedHero"></my-hero-detail>
          `,
       styles: [`
           .heroes {list-style-type: none; margin-left: 1em; padding: 0; width: 10em;}
@@ -69,7 +62,8 @@
             top: -1px;
           }
           .selected { background-color: #EEE; color: #369; }
-        `]
+        `],
+      directives: [app.HeroDetailComponent]
     })
     .Class({
       constructor: function() {
