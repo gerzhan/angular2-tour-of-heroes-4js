@@ -38,21 +38,23 @@
   app.AppComponent = ng.core
     .Component({
       selector: 'my-app',
-      template: `<h1>{{title}}</h1>
-         <h2>{{hero.name}} details</h2>
-         <div><label>id: </label>{{hero.id}}</div> 
-         <div>
-            <label>name: </label>
-            <div><input [(ngModel)]="hero.name" placeholder="name"></div>
-         </div>
+      template: `<h1>{{title}}</h1>          
          <h2>My Heroes</h2>
          <ul class="heroes">
-           <li *ngFor="#hero of heroes">
+           <li *ngFor="#hero of heroes" (click)="onSelect(hero)">
              <span class="badge">{{hero.id}}</span> {{hero.name}}
            </li>
          </ul>
+         <div *ngIf="selectedHero">
+           <h2>{{selectedHero.name}} details</h2>
+           <div><label>id: </label>{{selectedHero.id}}</div> 
+           <div>
+              <label>name: </label>
+              <div><input [(ngModel)]="selectedHero.name" placeholder="name"></div>
+           </div>
+         </div>
          `,
-        styles:[`
+      styles: [`
           .heroes {list-style-type: none; margin-left: 1em; padding: 0; width: 10em;}
           .heroes li { cursor: pointer; position: relative; left: 0; transition: all 0.2s ease; }
           .heroes li:hover {color: #369; background-color: #EEE; left: .2em;}
@@ -67,17 +69,18 @@
             top: -1px;
           }
           .selected { background-color: #EEE; color: #369; }
-        `] 
+        `]
     })
     .Class({
-
       constructor: function() {
         this.title = "Tour of Heroes";
         this.heroes = HEROES;
-        this.hero = new Hero({
-          id: 1,
-          name: 'Windstorm'
-        });
+        this.selectedHero;
+        this.onSelect = function(hero) {
+          console.log(hero);
+          this.selectedHero = hero;
+        }
       }
+
     });
 })(window.app || (window.app = {}))
